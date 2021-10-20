@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PS</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Payment System</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_new_register">NewRegister</string>
+    <string name="title_activity_choose">ChooseAct</string>
+    <string name="title_activity_new_cliente">NewCliente</string>
+    <string name="title_activity_new_emp">NewEmp</string>
+    <string name="title_activity_login">LoginAct</string>
+    <string name="title_activity_login_cli">LoginCli</string>
+    <string name="title_activity_login_emp">LoginEmp</string>
+</resources>
