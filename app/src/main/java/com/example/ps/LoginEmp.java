@@ -85,8 +85,7 @@ public class LoginEmp extends AppCompatActivity {
                 validaInfoCli();
                 break;
             case R.id.action_cancel_btn:
-                Intent it = new Intent(LoginEmp.this, LoginAct.class);
-                startActivity(it);
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }

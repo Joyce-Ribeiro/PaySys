@@ -15,6 +15,7 @@ public class RepositorioCliente {
     public RepositorioCliente(SQLiteDatabase conexao) {
     }
 
+
     public void ClienteRepositorio(SQLiteDatabase conexao){
         this.conexao=conexao;
     }

@@ -1,6 +1,8 @@
 package com.example.ps;
 
 import android.content.Intent;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -23,6 +25,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.ps.databinding.ActivityNewClienteBinding;
 
+import database.PaymentSystemOpenHelper;
+import dominio.entidade.Adiciona;
+import dominio.entidade.Cliente;
+import dominio.repositorio.RepositorioAdiciona;
+import dominio.repositorio.RepositorioCliente;
+
 public class NewCliente extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
@@ -31,6 +39,13 @@ public class NewCliente extends AppCompatActivity {
     private EditText edNumCli;
     private EditText edCodCli;
     private EditText edSenhaCli;
+    private ConstraintLayout layoutContentNewCli;
+    private RepositorioCliente repositorioCliente;
+    private RepositorioAdiciona repositorioAdiciona;
+    private PaymentSystemOpenHelper paymentSystemOpenHelper;
+    private SQLiteDatabase conexao;
+    private Cliente cliente;
+    private Adiciona adiciona;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +65,43 @@ public class NewCliente extends AppCompatActivity {
         edCodCli=(EditText)findViewById(R.id.edCodCli);
         edSenhaCli= (EditText)findViewById(R.id.edSenhaCli);
 
+        layoutContentNewCli = (ConstraintLayout)findViewById(R.id.layoutContentNewCli);
+        criarConexao();
+    }
+    private void criarConexao(){
+
+        try{
+            paymentSystemOpenHelper = new PaymentSystemOpenHelper(this);
+            conexao = paymentSystemOpenHelper.getWritableDatabase();
+            Snackbar.make(layoutContentNewCli, "SUCESSO", Snackbar.LENGTH_SHORT).setAction("ok",null).show();
+            repositorioCliente = new RepositorioCliente(conexao);
+            repositorioAdiciona = new RepositorioAdiciona(conexao);
+
+        }catch (SQLException ex){
+            AlertDialog.Builder dlg =new AlertDialog.Builder(this);
+            dlg.setTitle("Erro");
+            dlg.setMessage(ex.getMessage());
+            dlg.setNeutralButton("ok",null);
+            dlg.show();
+        }
+    }
+    private void confirmar(){
+        cliente = new Cliente();
+        adiciona = new Adiciona();
+        if(validaInfoCli()== false){
+            try {
+                repositorioCliente.inserir(cliente);
+                finish();
+
+                repositorioAdiciona.inserir(adiciona);
+            }catch (SQLException ex){
+                AlertDialog.Builder dlg =new AlertDialog.Builder(this);
+                dlg.setTitle("Erro");
+                dlg.setMessage(ex.getMessage());
+                dlg.setNeutralButton("ok",null);
+                dlg.show();
+            }
+            }
     }
     private boolean validaInfoCli(){
         boolean res = false;
@@ -57,6 +109,13 @@ public class NewCliente extends AppCompatActivity {
         String numero = edNumCli.getText().toString();
         String codigo = edCodCli.getText().toString();
         String senha = edSenhaCli.getText().toString();
+        repositorioAdiciona.buscarCliNum(cliente.getNumero());
+        int c=Integer.parseInt(codigo);
+
+        cliente.setNome(nome);
+        cliente.setNumero(numero);
+        cliente.setSenha(senha);
+        adiciona.getEmpresa().setCodigo(c);
 
         if (res = isCampoEmpty(nome)){
             edNomeCli.requestFocus();
@@ -95,11 +154,10 @@ public class NewCliente extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.action_ok_btn:
-                validaInfoCli();
+                confirmar();
                 break;
             case R.id.action_cancel_btn:
-                Intent it = new Intent(NewCliente.this, NewRegister.class);
-                startActivity(it);
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }

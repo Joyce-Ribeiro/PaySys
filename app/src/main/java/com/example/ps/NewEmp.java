@@ -88,8 +88,7 @@ public class NewEmp extends AppCompatActivity {
                 validaInfoCli();
                 break;
             case R.id.action_cancel_btn:
-                Intent it = new Intent(NewEmp.this, NewRegister.class);
-                startActivity(it);
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }
