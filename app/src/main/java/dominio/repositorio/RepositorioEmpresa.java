@@ -12,6 +12,10 @@ import dominio.entidade.Empresa;
 
 public class RepositorioEmpresa {
     private SQLiteDatabase conexao;
+
+    public RepositorioEmpresa(SQLiteDatabase conexao) {
+    }
+
     public void EmpresaRepositorio(SQLiteDatabase conexao) {
         this.conexao = conexao;
     }
