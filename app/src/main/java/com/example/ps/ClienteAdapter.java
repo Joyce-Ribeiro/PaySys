@@ -32,11 +32,12 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ClienteAdapter.ViewHolderCliente holder, int position) {
+    public void onBindViewHolder( ClienteAdapter.ViewHolderCliente holder, int position) {
         if(dadosCli!= null && dadosCli.size()>0){
             Cliente  cliente = dadosCli.get(position);
             holder.txtNomeCli.setText(cliente.getNome());
             holder.txtNumCli.setText(cliente.getNumero());
+
         }
     }
 
