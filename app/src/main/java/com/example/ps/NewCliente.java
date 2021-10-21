@@ -28,7 +28,6 @@ import com.example.ps.databinding.ActivityNewClienteBinding;
 import database.PaymentSystemOpenHelper;
 import dominio.entidade.Adiciona;
 import dominio.entidade.Cliente;
-import dominio.repositorio.RepositorioAdiciona;
 import dominio.repositorio.RepositorioCliente;
 
 public class NewCliente extends AppCompatActivity {
@@ -41,11 +40,10 @@ public class NewCliente extends AppCompatActivity {
     private EditText edSenhaCli;
     private ConstraintLayout layoutContentNewCli;
     private RepositorioCliente repositorioCliente;
-    private RepositorioAdiciona repositorioAdiciona;
     private PaymentSystemOpenHelper paymentSystemOpenHelper;
     private SQLiteDatabase conexao;
     private Cliente cliente;
-    private Adiciona adiciona;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +73,6 @@ public class NewCliente extends AppCompatActivity {
             conexao = paymentSystemOpenHelper.getWritableDatabase();
             Snackbar.make(layoutContentNewCli, "SUCESSO", Snackbar.LENGTH_SHORT).setAction("ok",null).show();
             repositorioCliente = new RepositorioCliente(conexao);
-            repositorioAdiciona = new RepositorioAdiciona(conexao);
 
         }catch (SQLException ex){
             AlertDialog.Builder dlg =new AlertDialog.Builder(this);
@@ -87,21 +84,15 @@ public class NewCliente extends AppCompatActivity {
     }
     private void confirmar(){
         cliente = new Cliente();
-        adiciona = new Adiciona();
-        if(validaInfoCli()== false){
-            try {
-                repositorioCliente.inserir(cliente);
-                finish();
+        if(validaInfoCli()== false) {
 
-                repositorioAdiciona.inserir(adiciona);
-            }catch (SQLException ex){
-                AlertDialog.Builder dlg =new AlertDialog.Builder(this);
-                dlg.setTitle("Erro");
-                dlg.setMessage(ex.getMessage());
-                dlg.setNeutralButton("ok",null);
-                dlg.show();
-            }
-            }
+            cliente.setNumero(edNumCli.getText().toString());
+            cliente.setNome(edNomeCli.getText().toString());
+            cliente.setSenha(edSenhaCli.getText().toString());
+            repositorioCliente.inserir(cliente);
+            finish();
+
+        }
     }
     private boolean validaInfoCli(){
         boolean res = false;
@@ -109,13 +100,10 @@ public class NewCliente extends AppCompatActivity {
         String numero = edNumCli.getText().toString();
         String codigo = edCodCli.getText().toString();
         String senha = edSenhaCli.getText().toString();
-        repositorioAdiciona.buscarCliNum(cliente.getNumero());
-        int c=Integer.parseInt(codigo);
 
         cliente.setNome(nome);
         cliente.setNumero(numero);
         cliente.setSenha(senha);
-        adiciona.getEmpresa().setCodigo(c);
 
         if (res = isCampoEmpty(nome)){
             edNomeCli.requestFocus();
@@ -126,7 +114,7 @@ public class NewCliente extends AppCompatActivity {
         else if (res = isCampoEmpty(codigo)){
             edCodCli.requestFocus();
         }
-        else if (res = isCampoEmpty(codigo)){
+        else if (res = isCampoEmpty(senha)){
             edSenhaCli.requestFocus();
         }
         if (res) {

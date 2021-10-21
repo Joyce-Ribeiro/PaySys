@@ -17,11 +17,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ps.databinding.ActivityMainBinding;
 
+import java.util.List;
+
 import database.PaymentSystemOpenHelper;
+import dominio.entidade.Cliente;
+import dominio.repositorio.RepositorioCliente;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase conexao;
     private ConstraintLayout layoutContentMain;
     private RecyclerView list_cli_emp;
+    private RepositorioCliente repositorioCliente;
+    private ClienteAdapter clienteAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         list_cli_emp = (RecyclerView)findViewById(R.id.list_cli_emp);
         layoutContentMain = (ConstraintLayout)findViewById(R.id.layoutContentMain);
         criarConexao();
+        list_cli_emp.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        list_cli_emp.setLayoutManager(linearLayoutManager);
+        repositorioCliente = new RepositorioCliente(conexao);
+        List<Cliente> dados = repositorioCliente.buscarTodos();
+        clienteAdapter = new ClienteAdapter(dados);
+        list_cli_emp.setAdapter(clienteAdapter);
+
     }
     private void criarConexao(){
 

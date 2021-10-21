@@ -29,7 +29,6 @@ import database.PaymentSystemOpenHelper;
 import dominio.entidade.Adiciona;
 import dominio.entidade.Cliente;
 import dominio.entidade.Empresa;
-import dominio.repositorio.RepositorioAdiciona;
 import dominio.repositorio.RepositorioCliente;
 import dominio.repositorio.RepositorioEmpresa;
 

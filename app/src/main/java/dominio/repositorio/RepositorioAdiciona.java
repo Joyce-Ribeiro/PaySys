@@ -1,4 +1,4 @@
-package dominio.repositorio;
+/*package dominio.repositorio;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -40,5 +40,5 @@ public class RepositorioAdiciona {
         return id;
 
     }
-}
+}*/
 
