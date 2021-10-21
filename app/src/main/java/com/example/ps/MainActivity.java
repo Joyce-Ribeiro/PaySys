@@ -67,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
         criarConexao();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         list_cli_emp.setLayoutManager(linearLayoutManager);
-
+        list_cli_emp.setHasFixedSize(true);
         repositorioCliente = new RepositorioCliente(conexao);
         List<Cliente> dados = repositorioCliente.buscarTodos();
         clienteAdapter = new ClienteAdapter(dados);
         list_cli_emp.setAdapter(clienteAdapter);
-        list_cli_emp.setHasFixedSize(true);
+
 
     }
     private void criarConexao(){
