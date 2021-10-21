@@ -24,6 +24,7 @@ public class RepositorioCliente{
 
 
     public void inserir(Cliente cliente) {
+
         ContentValues contentValues = new ContentValues();
         String nome = new String(cliente.getNome());
         contentValues.put("NOME", nome);

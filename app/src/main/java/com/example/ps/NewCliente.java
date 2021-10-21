@@ -89,7 +89,15 @@ public class NewCliente extends AppCompatActivity {
             cliente.setNumero(edNumCli.getText().toString());
             cliente.setNome(edNomeCli.getText().toString());
             cliente.setSenha(edSenhaCli.getText().toString());
-            repositorioCliente.inserir(cliente);
+            try {
+                repositorioCliente.inserir(cliente);
+            }catch (SQLException ex){
+                AlertDialog.Builder dlg =new AlertDialog.Builder(this);
+                dlg.setTitle("Erro");
+                dlg.setMessage(ex.getMessage());
+                dlg.setNeutralButton("ok",null);
+                dlg.show();
+            }
             finish();
 
         }
