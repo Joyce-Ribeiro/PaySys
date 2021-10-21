@@ -20,11 +20,13 @@ public class ScriptDDL {
         sql.append("    CREATE TABLE IF NOT EXISTS PAGAMENTO ( ");
         sql.append("        DATA VARCHAR(20)    PRIMARY KEY NOT NULL DEFAULT (''), " );
         sql.append("        ID_CLI  INTEGER     NOT NULL DEFAULT (''), " );
+        sql.append("        ID_Emp  INTEGER     NOT NULL DEFAULT (''), " );
         sql.append("        VALOR  FLOAT     NOT NULL DEFAULT (''), " );
         sql.append("        STATUS  BOOLEAN     NOT NULL DEFAULT (''), " );
         sql.append("        FREQUENCIA  INTEGER     NOT NULL DEFAULT (''), " );
         sql.append("        PDF  BLOB     NOT NULL DEFAULT (''), " );
-        sql.append("        FOREIGN KEY(ID_CLI) REFERENCES CLIENTE(ID) )");
+        sql.append("        FOREIGN KEY(ID_CLI) REFERENCES CLIENTE(ID), ");
+        sql.append("        FOREIGN KEY(ID_EMP) REFERENCES EMPRESA(CODIGO) )");
 
         return sql.toString();
     }

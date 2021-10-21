@@ -62,7 +62,7 @@ public class RepositorioCliente{
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT ID, NOME, SENHA, NUMERO ");
         sql.append("    FROM CLIENTE ");
-        if (conexao!=null){
+        /*if (conexao!=null){*/
         Cursor resultado = conexao.rawQuery(sql.toString(), null);
 
         if (resultado.getCount()>0) {
@@ -78,7 +78,8 @@ public class RepositorioCliente{
                 clientes.add(cli);
 
             } while (resultado.moveToNext());
-        }}
+        }
+        /*}*/
     return clientes;
     }
 }

@@ -65,13 +65,14 @@ public class MainActivity extends AppCompatActivity {
         list_cli_emp = (RecyclerView)findViewById(R.id.list_cli_emp);
         layoutContentMain = (ConstraintLayout)findViewById(R.id.layoutContentMain);
         criarConexao();
-        list_cli_emp.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         list_cli_emp.setLayoutManager(linearLayoutManager);
+
         repositorioCliente = new RepositorioCliente(conexao);
         List<Cliente> dados = repositorioCliente.buscarTodos();
         clienteAdapter = new ClienteAdapter(dados);
         list_cli_emp.setAdapter(clienteAdapter);
+        list_cli_emp.setHasFixedSize(true);
 
     }
     private void criarConexao(){
