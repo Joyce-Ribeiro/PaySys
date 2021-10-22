@@ -26,7 +26,7 @@ public class ScriptDDL {
         sql.append("        FREQUENCIA  INTEGER     NOT NULL DEFAULT (''), " );
         sql.append("        PDF  BLOB     NOT NULL DEFAULT (''), " );
         sql.append("        FOREIGN KEY(ID_CLI) REFERENCES CLIENTE(ID), ");
-        sql.append("        FOREIGN KEY(ID_EMP) REFERENCES EMPRESA(CODIGO) )");
+        sql.append("        FOREIGN KEY(ID_CLI) REFERENCES EMPRESA(ID) )");
 
         return sql.toString();
     }

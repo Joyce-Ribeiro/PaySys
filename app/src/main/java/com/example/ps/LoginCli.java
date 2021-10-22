@@ -59,7 +59,7 @@ public class LoginCli extends AppCompatActivity {
         else if (res = isCampoEmpty(codigo)){
             edLogCodCli.requestFocus();
         }
-        else if (res = isCampoEmpty(senha)){
+        else if (res = isCampoEmpty(codigo)){
             edLogSenhaCli.requestFocus();
         }
         if (res) {
@@ -91,7 +91,8 @@ public class LoginCli extends AppCompatActivity {
                 validaInfoCli();
                 break;
             case R.id.action_cancel_btn:
-                finish();
+                Intent it = new Intent(LoginCli.this, LoginAct.class);
+                startActivity(it);
         }
         return super.onOptionsItemSelected(item);
     }

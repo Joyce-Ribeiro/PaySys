@@ -1,6 +1,7 @@
 package com.example.ps;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -30,12 +31,13 @@ import dominio.repositorio.RepositorioCliente;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private PaymentSystemOpenHelper paymentSystemOpenHelper;
     private SQLiteDatabase conexao;
     private ConstraintLayout layoutContentMain;
-    private RecyclerView list_cli_emp;
+    public RecyclerView list_cli_emp;
     private RepositorioCliente repositorioCliente;
     private ClienteAdapter clienteAdapter;
 

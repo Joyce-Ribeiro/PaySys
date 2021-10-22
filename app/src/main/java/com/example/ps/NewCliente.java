@@ -26,11 +26,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.ps.databinding.ActivityNewClienteBinding;
 
 import database.PaymentSystemOpenHelper;
-import dominio.entidade.Adiciona;
 import dominio.entidade.Cliente;
 import dominio.repositorio.RepositorioCliente;
-
 public class NewCliente extends AppCompatActivity {
+
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityNewClienteBinding binding;
