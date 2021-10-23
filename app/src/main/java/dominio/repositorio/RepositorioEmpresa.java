@@ -19,11 +19,15 @@ public class RepositorioEmpresa {
     public void EmpresaRepositorio(SQLiteDatabase conexao) {
         this.conexao = conexao;
     }
-    public void inserir(Empresa empresa){
+
+    public void inserirEmp(Empresa empresa){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("NOME",empresa.getNome());
-        contentValues.put("NUMERO",empresa.getNumero());
-        contentValues.put("SENHA",empresa.getSenha());
+        String nome = new String(empresa.getNome());
+        String numero = new String(empresa.getNumero());
+        String senha = new String(empresa.getSenha());
+        contentValues.put("NOME",nome);
+        contentValues.put("NUMERO",numero);
+        contentValues.put("SENHA",senha);
 
         conexao.insertOrThrow("EMPRESA",null,contentValues );
 

@@ -2,8 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.ps">
-    <meta-data android:name="AA_DB_NAME" android:value="1.0.0.0.1" />
-    <meta-data android:name="AA_DB_VERSION" android:value="20" />
+
+    <meta-data
+        android:name="AA_DB_NAME"
+        android:value="1.0.0.0.1" />
+    <meta-data
+        android:name="AA_DB_VERSION"
+        android:value="20" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PS">
-
+        <activity
+            android:name=".EditCadCli"
+            android:exported="false"
+            android:label="@string/title_activity_edit_cad_cli"
+            android:theme="@style/Theme.PS.NoActionBar" />
         <activity
             android:name=".LoginEmp"
             android:exported="false"
@@ -42,7 +52,6 @@
             android:exported="false"
             android:label="@string/title_activity_choose"
             android:theme="@style/Theme.PS.NoActionBar" />
-
         <activity
             android:name=".NewRegister"
             android:exported="false"

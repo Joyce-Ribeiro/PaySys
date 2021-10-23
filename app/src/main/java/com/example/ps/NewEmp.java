@@ -83,7 +83,7 @@ public class NewEmp extends AppCompatActivity {
         empresa = new Empresa();
         if(validaInfoCli()== false){
             try {
-                repositorioEmpresa.inserir(empresa);
+                repositorioEmpresa.inserirEmp(empresa);
                 finish();
 
             }catch (SQLException ex){

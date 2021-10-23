@@ -47,7 +47,7 @@ public class NewRegister extends AppCompatActivity {
         binding.btncademp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent it = new Intent(NewRegister.this, NewEmp.class);
-                startActivity(it);
+                startActivityForResult(it, 0);
 
         }
     });

@@ -2,10 +2,13 @@ package dominio.entidade;
 
 public class Pagamento{
     protected String data;
+    protected int idpag;
     public Cliente cliente;
+    public Empresa empresa;
     protected float valor;
     protected boolean status;
     protected int frequencia;
+    protected String pdf;
 
     public String getData() {
         return data;
@@ -39,5 +42,11 @@ public class Pagamento{
         this.frequencia = frequencia;
         }
 
+    public String getPdf() {
+        return pdf;
+    }
 
-        }
+    public void setPdf(String pdf) {
+        this.pdf = pdf;
+    }
+}

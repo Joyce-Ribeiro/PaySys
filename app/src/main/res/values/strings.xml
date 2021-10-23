@@ -16,4 +16,5 @@
     <string name="title_activity_login">LoginAct</string>
     <string name="title_activity_login_cli">LoginCli</string>
     <string name="title_activity_login_emp">LoginEmp</string>
+    <string name="title_activity_edit_cad_cli">EditCadCli</string>
 </resources>

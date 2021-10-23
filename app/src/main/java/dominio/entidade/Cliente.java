@@ -1,6 +1,6 @@
 package dominio.entidade;
-
-public final class Cliente extends Pessoa {
+import java.io.Serializable;
+public final class Cliente extends Pessoa implements Serializable   {
     protected int idcli;
     protected String senha;
     protected Empresa empresa;

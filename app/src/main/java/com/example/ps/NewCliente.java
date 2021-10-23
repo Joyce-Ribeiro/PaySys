@@ -53,6 +53,8 @@ public class NewCliente extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
+
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_new_cliente);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -85,11 +87,8 @@ public class NewCliente extends AppCompatActivity {
         cliente = new Cliente();
         if(validaInfoCli()== false) {
 
-            cliente.setNumero(edNumCli.getText().toString());
-            cliente.setNome(edNomeCli.getText().toString());
-            cliente.setSenha(edSenhaCli.getText().toString());
             try {
-                repositorioCliente.inserir(cliente);
+                repositorioCliente.inserirCli(cliente);
             }catch (SQLException ex){
                 AlertDialog.Builder dlg =new AlertDialog.Builder(this);
                 dlg.setTitle("Erro");
@@ -115,6 +114,7 @@ public class NewCliente extends AppCompatActivity {
         if (res = isCampoEmpty(nome)){
             edNomeCli.requestFocus();
         }
+
         else if (res = isCampoEmpty(numero)){
             edNumCli.requestFocus();
         }
@@ -148,6 +148,7 @@ public class NewCliente extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         switch (id){
+
             case R.id.action_ok_btn:
                 confirmar();
                 break;

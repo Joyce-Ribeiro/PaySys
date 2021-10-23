@@ -1,5 +1,7 @@
 package com.example.ps;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,7 +30,7 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
     public ClienteAdapter.ViewHolderCliente onCreateViewHolder( ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.linha_cliente, parent, false);
-        ViewHolderCliente holderCliente = new ViewHolderCliente(view);
+        ViewHolderCliente holderCliente = new ViewHolderCliente(view, parent.getContext());
         return holderCliente;
     }
 
@@ -56,14 +59,28 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
         public Button btnViewPag;
         public FloatingActionButton fabEdit;
 
-        public ViewHolderCliente (View itemView){
+        public ViewHolderCliente (View itemView, final Context context){
             super(itemView);
             txtNomeCli = (TextView) itemView.findViewById(R.id.txtNomeCli);
             txtNumCli = (TextView) itemView.findViewById(R.id.txtNumCli);
             btnViewPag = (Button) itemView.findViewById(R.id.btnViewPag);
-            fabEdit = (FloatingActionButton) itemView.findViewById(R.id.fabEdit);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (dadosCli.size()>0) {
+                        Cliente cliente=dadosCli.get(getLayoutPosition());
+                        Intent it = new Intent(context, EditCadCli.class);
+                        it.putExtra("CLIENTE", cliente);
+                        ((AppCompatActivity) context).startActivityForResult(it, 0);
+                    }
+                    }
+
+            });
 
         }
+
+
 
 
     }

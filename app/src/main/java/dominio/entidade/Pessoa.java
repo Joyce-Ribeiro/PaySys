@@ -16,7 +16,7 @@ public abstract class Pessoa {
         return numero;
     }
 
-    public void setNumero(String nome) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 }

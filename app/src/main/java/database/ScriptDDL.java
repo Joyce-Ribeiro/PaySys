@@ -18,15 +18,17 @@ public class ScriptDDL {
         StringBuilder sql = new StringBuilder();
 
         sql.append("    CREATE TABLE IF NOT EXISTS PAGAMENTO ( ");
-        sql.append("        DATA VARCHAR(20)    PRIMARY KEY NOT NULL DEFAULT (''), " );
+        sql.append("        IDPAG INTEGER  PRIMARY KEY AUTOINCREMENT   NOT NULL DEFAULT (''), " );
+        sql.append("        DATA VARCHAR(10)     NOT NULL DEFAULT (''), " );
         sql.append("        ID_CLI  INTEGER     NOT NULL DEFAULT (''), " );
         sql.append("        ID_Emp  INTEGER     NOT NULL DEFAULT (''), " );
         sql.append("        VALOR  FLOAT     NOT NULL DEFAULT (''), " );
         sql.append("        STATUS  BOOLEAN     NOT NULL DEFAULT (''), " );
         sql.append("        FREQUENCIA  INTEGER     NOT NULL DEFAULT (''), " );
-        sql.append("        PDF  BLOB     NOT NULL DEFAULT (''), " );
+        sql.append("        PDF  BLOB     DEFAULT (''), " );
         sql.append("        FOREIGN KEY(ID_CLI) REFERENCES CLIENTE(ID), ");
         sql.append("        FOREIGN KEY(ID_CLI) REFERENCES EMPRESA(ID) )");
+
 
         return sql.toString();
     }

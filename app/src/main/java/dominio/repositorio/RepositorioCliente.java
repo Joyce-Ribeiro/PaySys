@@ -4,13 +4,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 import dominio.entidade.Cliente;
 
@@ -23,15 +20,18 @@ public class RepositorioCliente{
     }
 
 
-    public void inserir(Cliente cliente) {
+    public void inserirCli(Cliente cliente) {
 
         ContentValues contentValues = new ContentValues();
         String nome = new String(cliente.getNome());
+        String numero;
+        numero = cliente.getNumero();
+        String senha = new String(cliente.getSenha());
         contentValues.put("NOME", nome);
-        contentValues.put("NUMERO", "cliente.getNumero()");
-        contentValues.put("SENHA", "cliente.getSenha()");
+        contentValues.put("NUMERO", numero);
+        contentValues.put("SENHA", senha);
 
-        conexao.insert("CLIENTE", null, contentValues);
+        conexao.insertOrThrow("CLIENTE", null, contentValues);
 
     }
 

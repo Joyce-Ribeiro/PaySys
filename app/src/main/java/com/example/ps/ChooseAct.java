@@ -40,7 +40,7 @@ public class ChooseAct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(ChooseAct.this, NewRegister.class);
-                startActivity(it);
+                startActivityForResult(it, 0);
 
             }
         });
