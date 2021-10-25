@@ -117,32 +117,37 @@ public class RepositorioCliente{
 
     return clientes;
     }
-    public int buscarCliente(String numero) {
+    public int buscarCliente(String numero, String senha, int cod) {
         Cliente cliente = new Cliente();
         int idres = 0;
 
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT ID ");
-        sql.append("    FROM CLIENTE ");
-        sql.append("    WHERE NUMERO = ? ");
+        sql.append(" SELECT CLIENTE.ID, CLIENTE.SENHA ");
+        sql.append("    FROM CLIENTE, ADICIONA, EMPRESA ");
+        sql.append("    WHERE ADICIONA.CODIGO_EMP = ? AND CLIENTE.NUMERO = ? AND ADICIONA.ID_CLIENT = CLIENTE.ID ");
 
-        String[] parametros = new String[1];
-        parametros[0] = String.valueOf(numero);
 
+        String[] parametros = new String[2];
+        parametros[0] = String.valueOf(cod);
+        parametros[1] = String.valueOf(numero);
         Cursor resultado = conexao.rawQuery(sql.toString(), parametros);
 
         if (resultado.getCount()>0) {
             resultado.moveToFirst();
 
-            idres= resultado.getColumnIndex("ID");
-            cliente.setIdcli(Integer.parseInt(resultado.getString(idres)));
+            int senhares= resultado.getColumnIndex("SENHA");
+            cliente.setSenha(resultado.getString(senhares));
+
+            System.out.println(cliente.getSenha());
+            System.out.println(senhares);
+            if(senha.equals(cliente.getSenha())) {
+                idres = resultado.getColumnIndex("ID");
+                cliente.setIdcli(Integer.parseInt(resultado.getString(idres)));
 
 
+            }
 
-
-
-
-        }
+            }
         return cliente.getIdcli();
     }
 }

@@ -6,21 +6,22 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="412dp"
+        android:layout_height="142dp"
         android:foreground="?attr/selectableItemBackground"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="-1dp">
 
         <Button
             android:id="@+id/btnViewPag"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Ver Pag" />
+            android:text="Add Pag" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
@@ -39,7 +40,30 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/txtFreq"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="TextView"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:text="TextView"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
 
     </LinearLayout>
 

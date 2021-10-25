@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,8 +60,8 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
 
         public ViewHolderCliente (View itemView, final Context context){
             super(itemView);
-            txtNomeCli = (TextView) itemView.findViewById(R.id.txtNomeCli);
-            txtNumCli = (TextView) itemView.findViewById(R.id.txtNumCli);
+            txtNomeCli = (TextView) itemView.findViewById(R.id.txtData);
+            txtNumCli = (TextView) itemView.findViewById(R.id.txtValor);
             btnViewPag = (Button) itemView.findViewById(R.id.btnViewPag);
 
             itemView.setOnClickListener(new View.OnClickListener() {

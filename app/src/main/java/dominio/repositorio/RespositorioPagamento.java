@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import dominio.entidade.Adiciona;
-import dominio.entidade.Cliente;
 import dominio.entidade.Pagamento;
 
 public class RespositorioPagamento {
@@ -46,5 +44,41 @@ public class RespositorioPagamento {
         contentValues.put("PDF",pagamento.getPdf());
 
         conexao.insertOrThrow("PAGAMENTO WHERE IDPAG = ?",idpag,contentValues );
+    }
+    public List<Pagamento> buscarTodos(int id, int cod ) {
+        List<Pagamento> pagamentos = new ArrayList<Pagamento>();
+
+
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT DATA, VALOR, STATUS, FREQUENCIA ");
+        sql.append("    FROM PAGAMENTO ");
+        sql.append("    WHERE  ID_CLI = ? AND ID_EMP = ?");
+        String[] parametros = new String[2];
+        parametros[0] = String.valueOf(id);
+        parametros[1] = String.valueOf(cod);
+        Cursor resultado = conexao.rawQuery(sql.toString(), parametros);
+
+        if (resultado.getCount()>0) {
+            resultado.moveToFirst();
+            do {
+                Pagamento pag = new Pagamento();
+                int resdata = resultado.getColumnIndex("DATA");
+                int resvalor = resultado.getColumnIndex("VALOR");
+                int resstatus = resultado.getColumnIndex("STATUS");
+                int resfreq = resultado.getColumnIndex("FREQUENCIA");
+
+                pag.setData(resultado.getString(resdata));
+                pag.setValor( Integer.parseInt(resultado.getString(resvalor)));
+                pag.setStatus(Boolean.parseBoolean(resultado.getString(resstatus)));
+                pag.setFrequencia(Integer.parseInt(resultado.getString(resfreq)));
+
+
+
+                pagamentos.add(pag);
+
+            } while (resultado.moveToNext());
+        }
+
+        return pagamentos;
     }
 }

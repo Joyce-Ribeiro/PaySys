@@ -29,7 +29,9 @@ import java.util.List;
 
 import database.PaymentSystemOpenHelper;
 import dominio.entidade.Cliente;
+import dominio.entidade.Pagamento;
 import dominio.repositorio.RepositorioCliente;
+import dominio.repositorio.RespositorioPagamento;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView codeemp;
     public RecyclerView list_cli_emp;
     private RepositorioCliente repositorioCliente;
+    private RespositorioPagamento respositorioPagamento;
     private ClienteAdapter clienteAdapter;
+    private PagamentoAdapter pagamentoAdapter;
 
 
     @Override
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         list_cli_emp.setLayoutManager(linearLayoutManager);
         list_cli_emp.setHasFixedSize(true);
         repositorioCliente = new RepositorioCliente(conexao);
+        respositorioPagamento = new RespositorioPagamento(conexao);
 
         Bundle bundle = getIntent().getExtras();
         if((bundle != null)&&(bundle.containsKey("Empresa")))
@@ -86,6 +91,13 @@ public class MainActivity extends AppCompatActivity {
             List<Cliente> dados = repositorioCliente.buscarTodos(codigo);
             clienteAdapter = new ClienteAdapter(dados);
             list_cli_emp.setAdapter(clienteAdapter);
+
+        }else if((bundle != null)&&(bundle.containsKey("Cliente"))){
+            int id = (int)bundle.getInt("Cliente");
+            int codigoemp = (int)bundle.getInt("Clientecod");
+            List<Pagamento> dados = respositorioPagamento.buscarTodos(id,codigoemp);
+            pagamentoAdapter = new PagamentoAdapter(dados);
+            list_cli_emp.setAdapter(pagamentoAdapter);
         }
 
 
