@@ -21,7 +21,7 @@ public class ScriptDDL {
         sql.append("        IDPAG INTEGER  PRIMARY KEY AUTOINCREMENT   NOT NULL DEFAULT (''), " );
         sql.append("        DATA VARCHAR(10)     NOT NULL DEFAULT (''), " );
         sql.append("        ID_CLI  INTEGER     NOT NULL DEFAULT (''), " );
-        sql.append("        ID_Emp  INTEGER     NOT NULL DEFAULT (''), " );
+        sql.append("        ID_EMP  INTEGER     NOT NULL DEFAULT (''), " );
         sql.append("        VALOR  FLOAT     NOT NULL DEFAULT (''), " );
         sql.append("        STATUS  BOOLEAN     NOT NULL DEFAULT (''), " );
         sql.append("        FREQUENCIA  INTEGER     NOT NULL DEFAULT (''), " );

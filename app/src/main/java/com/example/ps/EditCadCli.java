@@ -9,11 +9,13 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,8 +24,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.ps.databinding.ActivityEditCadCliBinding;
 
+import java.util.List;
+
 import database.PaymentSystemOpenHelper;
 import dominio.entidade.Cliente;
+import dominio.entidade.Pagamento;
 import dominio.repositorio.RepositorioCliente;
 import dominio.repositorio.RespositorioPagamento;
 
@@ -36,8 +41,11 @@ public class EditCadCli extends AppCompatActivity {
     private EditText editFreq;
     private EditText editfirstdata;
     private EditText editvalor;
+    private EditText editCod;
+    private EditText editIdCli;
+    private RespositorioPagamento repositorioPagamento;
+    private Pagamento pagamento;
     private RepositorioCliente repositorioCliente;
-    private Cliente cliente;
 
 
 
@@ -58,21 +66,20 @@ public class EditCadCli extends AppCompatActivity {
         editFreq=(EditText)findViewById(R.id.editFreq);
         editfirstdata=(EditText)findViewById(R.id.editfirstdata);
         editvalor=(EditText)findViewById(R.id.editvalor);
+        editCod=(EditText)findViewById(R.id.editCod);
+        editIdCli=(EditText)findViewById(R.id.editIdCli);
         criarConexao();
-        /*verificaParametro();*/
+
     }
-    private void verificaParametro(){
-        Bundle bundle = getIntent().getExtras();
-        if ((bundle != null) && (bundle.containsKey("CLIENTE")) ){
-            Cliente cliente = (Cliente) bundle.getSerializable("CLIENTE");
-        }
-    }
+
+
     private void criarConexao(){
 
         try{
             paymentSystemOpenHelper = new PaymentSystemOpenHelper(this);
             conexao = paymentSystemOpenHelper.getWritableDatabase();
-            /*repositorioPagamento = new RespositorioPagamento(conexao);*/
+            repositorioPagamento = new RespositorioPagamento(conexao);
+            repositorioCliente = new RepositorioCliente(conexao);
 
         }catch (SQLException ex){
             AlertDialog.Builder dlg =new AlertDialog.Builder(this);
@@ -81,6 +88,63 @@ public class EditCadCli extends AppCompatActivity {
             dlg.setNeutralButton("ok",null);
             dlg.show();
         }
+    }
+    private void confirmar(){
+        pagamento = new Pagamento();
+        if(validaInfoCli()== false) {
+
+            try {
+                repositorioPagamento.inserirPagamento(pagamento);
+            }catch (SQLException ex){
+                /*AlertDialog.Builder dlg =new AlertDialog.Builder(this);
+                dlg.setTitle("Erro");
+                dlg.setMessage(ex.getMessage());
+                dlg.setNeutralButton("ok",null);
+                dlg.show();*/
+            }
+            finish();
+
+        }
+    }
+    private boolean validaInfoCli(){
+        boolean res = false;
+        String frequencia = editFreq.getText().toString();
+        String data = editfirstdata.getText().toString();
+        String valor = editvalor.getText().toString();
+        String codemp= editCod.getText().toString();
+        String idcli = editIdCli.getText().toString();
+
+        pagamento.setFrequencia(Integer.parseInt(frequencia));
+        pagamento.setData(data);
+        pagamento.setValor(Integer.parseInt(valor));
+        pagamento.setId_cli(Integer.parseInt(idcli));
+        pagamento.setId_emp(Integer.parseInt(codemp));
+        pagamento.setStatus(false);
+
+
+        if (res = isCampoEmpty(frequencia)){
+            editFreq.requestFocus();
+        }
+
+        else if (res = isCampoEmpty(data)){
+            editfirstdata.requestFocus();
+        }
+        else if (res = isCampoEmpty(valor)){
+            editvalor.requestFocus();
+        }
+
+        if (res) {
+            AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+            dlg.setTitle("Aviso");
+            dlg.setMessage("Há campos inválidos");
+            dlg.setNeutralButton("ok", null);
+            dlg.show();
+        }
+        return res;
+    }
+    private boolean isCampoEmpty(String valor){
+        boolean resultado = (TextUtils.isEmpty(valor) || valor.trim().isEmpty() );
+        return resultado;
     }
     @Override
     public boolean onSupportNavigateUp() {
@@ -102,10 +166,10 @@ public class EditCadCli extends AppCompatActivity {
         switch (id){
 
             case R.id.action_ok_btn:
-
+                confirmar();
                 break;
             case R.id.action_cancel_btn:
-                repositorioCliente.excluir(cliente.getIdcli());
+
                 finish();
         }
         return super.onOptionsItemSelected(item);

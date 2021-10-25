@@ -14,19 +14,32 @@ import dominio.entidade.Pagamento;
 
 public class RespositorioPagamento {
     private SQLiteDatabase conexao;
-    public RespositorioPagamento(SQLiteDatabase conexao) {
+    public RespositorioPagamento(SQLiteDatabase conexao) {this.conexao= conexao;
     }
     public void inserirPagamento(Pagamento pagamento){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("CODIGO_EMP",pagamento.empresa.getCodigo());
-        contentValues.put("ID_CLIENT",pagamento.cliente.getIdcli());
-        contentValues.put("DATA",pagamento.getData());
-        contentValues.put("VALOR",pagamento.getData());
-        contentValues.put("STATUS",pagamento.isStatus());
-        contentValues.put("FREQUENCIA",pagamento.getFrequencia());
+        int idemp;
+        idemp = pagamento.getId_emp();
+        int idcli;
+        idcli = pagamento.getId_cli();
+        String data;
+        data =pagamento.getData();
+        Float valor;
+        valor=pagamento.getValor();
+        boolean status;
+        status = pagamento.isStatus();
+        int freq;
+        freq = pagamento.getFrequencia();
+
+        contentValues.put("ID_EMP",idemp);
+        contentValues.put("ID_CLI",idcli);
+        contentValues.put("DATA",data);
+        contentValues.put("VALOR",valor);
+        contentValues.put("STATUS",status);
+        contentValues.put("FREQUENCIA",freq);
 
 
-        conexao.insertOrThrow("PAGAMENTO",null,contentValues );
+        conexao.insertOrThrow("PAGAMENTO",null,contentValues);
     }
     public void inserirPdf(Pagamento pagamento, String idpag){
         ContentValues contentValues = new ContentValues();

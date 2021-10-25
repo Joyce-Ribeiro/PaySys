@@ -3,8 +3,8 @@ package dominio.entidade;
 public class Pagamento{
     protected String data;
     protected int idpag;
-    public Cliente cliente;
-    public Empresa empresa;
+    public int id_cli ;
+    public int id_emp;
     protected float valor;
     protected boolean status;
     protected int frequencia;
@@ -48,5 +48,21 @@ public class Pagamento{
 
     public void setPdf(String pdf) {
         this.pdf = pdf;
+    }
+
+    public int getId_emp() {
+        return id_emp;
+    }
+
+    public void setId_emp(int id_emp) {
+        this.id_emp = id_emp;
+    }
+
+    public int getId_cli() {
+        return id_cli;
+    }
+
+    public void setId_cli(int id_cli) {
+        this.id_cli = id_cli;
     }
 }

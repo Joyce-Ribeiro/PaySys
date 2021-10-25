@@ -69,10 +69,12 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     if (dadosCli.size()>0) {
-                        Cliente cliente=dadosCli.get(getLayoutPosition());
+
+                        String numero = txtNumCli.getText().toString();
+
                         Intent it = new Intent(context, EditCadCli.class);
-                        it.putExtra("CLIENTE", cliente);
-                        ((AppCompatActivity) context).startActivityForResult(it, 0);
+                        it.putExtra("NUMERO", numero);
+                        ((AppCompatActivity)context).startActivity(it);
                     }
                     }
 

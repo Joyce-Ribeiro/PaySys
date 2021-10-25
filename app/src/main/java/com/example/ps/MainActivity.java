@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private PaymentSystemOpenHelper paymentSystemOpenHelper;
     private SQLiteDatabase conexao;
     private ConstraintLayout layoutContentMain;
+    private TextView codeemp;
     public RecyclerView list_cli_emp;
     private RepositorioCliente repositorioCliente;
     private ClienteAdapter clienteAdapter;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        codeemp=(TextView)findViewById(R.id.codemp);
         list_cli_emp = (RecyclerView)findViewById(R.id.list_cli_emp);
         layoutContentMain = (ConstraintLayout)findViewById(R.id.layoutContentMain);
         criarConexao();
@@ -74,11 +77,12 @@ public class MainActivity extends AppCompatActivity {
         list_cli_emp.setLayoutManager(linearLayoutManager);
         list_cli_emp.setHasFixedSize(true);
         repositorioCliente = new RepositorioCliente(conexao);
+
         Bundle bundle = getIntent().getExtras();
         if((bundle != null)&&(bundle.containsKey("Empresa")))
         {
             int codigo = (int)bundle.getInt("Empresa");
-
+            codeemp.setText(Integer.toString(codigo));
             List<Cliente> dados = repositorioCliente.buscarTodos(codigo);
             clienteAdapter = new ClienteAdapter(dados);
             list_cli_emp.setAdapter(clienteAdapter);
@@ -110,13 +114,5 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
-            List<Cliente> dados = repositorioCliente.buscarTodos();
-            clienteAdapter = new ClienteAdapter(dados);
-            list_cli_emp.setAdapter(clienteAdapter);
-        }*/
-    /*}*/
+
 }

@@ -117,6 +117,34 @@ public class RepositorioCliente{
 
     return clientes;
     }
+    public int buscarCliente(String numero) {
+        Cliente cliente = new Cliente();
+        int idres = 0;
+
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT ID ");
+        sql.append("    FROM CLIENTE ");
+        sql.append("    WHERE NUMERO = ? ");
+
+        String[] parametros = new String[1];
+        parametros[0] = String.valueOf(numero);
+
+        Cursor resultado = conexao.rawQuery(sql.toString(), parametros);
+
+        if (resultado.getCount()>0) {
+            resultado.moveToFirst();
+
+            idres= resultado.getColumnIndex("ID");
+            cliente.setIdcli(Integer.parseInt(resultado.getString(idres)));
+
+
+
+
+
+
+        }
+        return cliente.getIdcli();
+    }
 }
 
 
