@@ -74,9 +74,18 @@ public class MainActivity extends AppCompatActivity {
         list_cli_emp.setLayoutManager(linearLayoutManager);
         list_cli_emp.setHasFixedSize(true);
         repositorioCliente = new RepositorioCliente(conexao);
-        List<Cliente> dados = repositorioCliente.buscarTodos();
-        clienteAdapter = new ClienteAdapter(dados);
-        list_cli_emp.setAdapter(clienteAdapter);
+        Bundle bundle = getIntent().getExtras();
+        if((bundle != null)&&(bundle.containsKey("Empresa")))
+        {
+            int codigo = (int)bundle.getInt("Empresa");
+
+            List<Cliente> dados = repositorioCliente.buscarTodos(codigo);
+            clienteAdapter = new ClienteAdapter(dados);
+            list_cli_emp.setAdapter(clienteAdapter);
+        }
+
+
+
 
 
     }
@@ -101,13 +110,13 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
             List<Cliente> dados = repositorioCliente.buscarTodos();
             clienteAdapter = new ClienteAdapter(dados);
             list_cli_emp.setAdapter(clienteAdapter);
-        }
-    }
+        }*/
+    /*}*/
 }

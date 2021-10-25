@@ -14,22 +14,23 @@ public class RepositorioEmpresa {
     private SQLiteDatabase conexao;
 
     public RepositorioEmpresa(SQLiteDatabase conexao) {
-    }
-
-    public void EmpresaRepositorio(SQLiteDatabase conexao) {
         this.conexao = conexao;
     }
 
+
+
     public void inserirEmp(Empresa empresa){
+
         ContentValues contentValues = new ContentValues();
         String nome = new String(empresa.getNome());
-        String numero = new String(empresa.getNumero());
+        String numero;
+        numero = empresa.getNumero();
         String senha = new String(empresa.getSenha());
-        contentValues.put("NOME",nome);
-        contentValues.put("NUMERO",numero);
-        contentValues.put("SENHA",senha);
+        contentValues.put("NOME", nome);
+        contentValues.put("NUMERO", numero);
+        contentValues.put("SENHA", senha);
 
-        conexao.insertOrThrow("EMPRESA",null,contentValues );
+        conexao.insertOrThrow("EMPRESA", null, contentValues);
 
     }
     public void excluir(int codigo){
@@ -74,4 +75,38 @@ public class RepositorioEmpresa {
         return empresas;
     }
 
+    public int buscarEmpresa(String numero, String senha) {
+        Empresa empresa = new Empresa();
+        int codigores = 0;
+
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT CODIGO, SENHA ");
+        sql.append("    FROM EMPRESA ");
+        sql.append("    WHERE NUMERO = ? ");
+
+        String[] parametros = new String[1];
+        parametros[0] = String.valueOf(numero);
+
+        Cursor resultado = conexao.rawQuery(sql.toString(), parametros);
+
+        if (resultado.getCount()>0) {
+            resultado.moveToFirst();
+
+            int senhares= resultado.getColumnIndex("SENHA");
+            empresa.setSenha(resultado.getString(senhares));
+
+            System.out.println(empresa.getSenha());
+            System.out.println(senha);
+            if(senha.equals(empresa.getSenha())){
+                codigores= resultado.getColumnIndex("CODIGO");
+                empresa.setCodigo(Integer.parseInt(resultado.getString(codigores)));
+
+
+
+            }
+
+
+        }
+        return empresa.getCodigo();
+    }
 }

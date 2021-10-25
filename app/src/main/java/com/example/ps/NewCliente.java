@@ -89,6 +89,8 @@ public class NewCliente extends AppCompatActivity {
 
             try {
                 repositorioCliente.inserirCli(cliente);
+                int codigo = Integer.parseInt(edCodCli.getText().toString());
+                repositorioCliente.inserirAdd(cliente.getNumero(),codigo);
             }catch (SQLException ex){
                 AlertDialog.Builder dlg =new AlertDialog.Builder(this);
                 dlg.setTitle("Erro");
@@ -104,8 +106,8 @@ public class NewCliente extends AppCompatActivity {
         boolean res = false;
         String nome = edNomeCli.getText().toString();
         String numero = edNumCli.getText().toString();
-        String codigo = edCodCli.getText().toString();
         String senha = edSenhaCli.getText().toString();
+        String codigo = edCodCli.getText().toString();
 
         cliente.setNome(nome);
         cliente.setNumero(numero);

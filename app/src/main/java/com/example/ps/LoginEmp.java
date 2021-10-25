@@ -1,6 +1,8 @@
 package com.example.ps;
 
 import android.content.Intent;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -22,10 +24,17 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.ps.databinding.ActivityLoginEmpBinding;
 
+import database.PaymentSystemOpenHelper;
+import dominio.repositorio.RepositorioCliente;
+import dominio.repositorio.RepositorioEmpresa;
+
 public class LoginEmp extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityLoginEmpBinding binding;
+    private RepositorioEmpresa repositorioEmpresa;
+    private PaymentSystemOpenHelper paymentSystemOpenHelper;
+    private SQLiteDatabase conexao;
     private EditText edLogNumEmp;
     private EditText edLogSenhaEmp;
 
@@ -43,6 +52,7 @@ public class LoginEmp extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         edLogNumEmp=(EditText)findViewById(R.id.edLogNumEmp);
         edLogSenhaEmp=(EditText)findViewById(R.id.edLogSenhaEmp);
+        criarConexao();
     }
     private boolean validaInfoCli(){
         boolean res = false;
@@ -83,6 +93,18 @@ public class LoginEmp extends AppCompatActivity {
         switch (id) {
             case R.id.action_ok_btn:
                 validaInfoCli();
+                String numero=edLogNumEmp.getText().toString() ;
+                String senha=edLogSenhaEmp.getText().toString();
+
+                int resposta;
+                resposta = repositorioEmpresa.buscarEmpresa(numero, senha);
+
+                if(resposta>0){
+                    Intent it = new Intent(LoginEmp.this, MainActivity.class);
+                    it.putExtra("Empresa", resposta);
+                    startActivity(it);
+            }
+
                 break;
             case R.id.action_cancel_btn:
                 finish();
@@ -94,5 +116,19 @@ public class LoginEmp extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_login_emp);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+    private void criarConexao(){
+
+        try{
+            paymentSystemOpenHelper = new PaymentSystemOpenHelper(this);
+            conexao = paymentSystemOpenHelper.getWritableDatabase();
+            repositorioEmpresa = new RepositorioEmpresa(conexao);
+        }catch (SQLException ex){
+            AlertDialog.Builder dlg =new AlertDialog.Builder(this);
+            dlg.setTitle("Erro");
+            dlg.setMessage(ex.getMessage());
+            dlg.setNeutralButton("ok",null);
+            dlg.show();
+        }
     }
 }

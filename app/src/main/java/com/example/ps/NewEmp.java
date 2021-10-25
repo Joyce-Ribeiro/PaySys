@@ -62,6 +62,7 @@ public class NewEmp extends AppCompatActivity {
         edNumEmp=(EditText)findViewById(R.id.edNumEmp);
         edSenhaEmp= (EditText)findViewById(R.id.edSenhaEmp);
         layoutContentNewEmp = (ConstraintLayout)findViewById(R.id.layoutContentNewEmp);
+        criarConexao();
     }
     private void criarConexao(){
 
@@ -100,6 +101,9 @@ public class NewEmp extends AppCompatActivity {
         String nome = edNomeEmp.getText().toString();
         String numero = edNumEmp.getText().toString();
         String senha = edSenhaEmp.getText().toString();
+        empresa.setNome(nome);
+        empresa.setNumero(numero);
+        empresa.setSenha(senha);
 
         if (res = isCampoEmpty(nome)) {
             edNomeEmp.requestFocus();
